@@ -17,37 +17,38 @@ public class EstoqueService {
 	public EstoqueService(EstoqueRepository estoqueRepository) {
 		this.estoqueRepository = estoqueRepository;
 	}
-
-	public List<Estoque> buscarTodosEstoques() {
+	
+	public List<Estoque> buscarTodosEstoque(){
 		return estoqueRepository.findAll();
 	}
-
-	public Estoque buscarEstoquesPorId(Long id) {
-		Optional<Estoque> hospede = estoqueRepository.findById(id);
-		return hospede.orElse(null);
+	
+	public Estoque buscarEstoquePorId(Long id){
+		  Optional <Estoque> estoque = estoqueRepository.findById(id);
+	        return estoque.orElse(null);
 	}
-
-	public Estoque salvarEstoques(Estoque atEstoque) {
+	
+	public Estoque salvarEstoque(Estoque atEstoque) {
 		return estoqueRepository.save(atEstoque);
 	}
-
-	public Estoque alterarEstoque(Long id, Estoque alterarP) {
-		Optional<Estoque> existeEstoque = estoqueRepository.findById(id);
-		if (existeEstoque.isPresent()) {
-			Estoque estoque = existeEstoque.get();
-			BeanUtils.copyProperties(alterarP, estoque, "id");
+	
+	public Estoque atualizarEstoque(Long id, Estoque atEstoque) {
+		Optional <Estoque> exeEstoque = estoqueRepository.findById(id);
+		if(exeEstoque.isPresent()) {
+			Estoque estoque =exeEstoque.get();
+			BeanUtils.copyProperties(atEstoque, estoque, "id");
 			return estoqueRepository.save(estoque);
 		}
-		return null;
+		
+			return null;
+		
 	}
-
+	
 	public Boolean apagarEstoque(Long id) {
 		Optional<Estoque> exeEstoque = estoqueRepository.findById(id);
-		if (exeEstoque.isPresent()) {
+		if(exeEstoque.isPresent()) {
 			estoqueRepository.deleteById(id);
 			return true;
 		}
 		return false;
 	}
 }
-

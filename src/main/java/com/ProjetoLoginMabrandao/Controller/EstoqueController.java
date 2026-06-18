@@ -21,52 +21,55 @@ import com.ProjetoLoginMabrandao.Service.EstoqueService;
 @RequestMapping("/estoque")
 public class EstoqueController {
 	@Autowired
-	private EstoqueService estoqueService;
+    private final EstoqueService EstoqueService;
 
-	public EstoqueController(EstoqueService estoqueService) {
-		this.estoqueService = estoqueService;
-	}
+    public EstoqueController(EstoqueService EstoqueService) {
+        this.EstoqueService = EstoqueService;
+    }
+    
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Estoque> buscarEstoqueId(@PathVariable Long id) {
+    	Estoque Estoque = EstoqueService.buscarEstoquePorId(id);
+        if (Estoque != null) {
+            return ResponseEntity.ok(Estoque);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<Estoque>> buscarTodosEstoque() {
+        List<Estoque> estoque = EstoqueService.buscarTodosEstoque();
+        return ResponseEntity.ok(estoque);
+    }
 
-	@GetMapping("/{id}")
-	public ResponseEntity<Estoque> buscarEstoqueId(@PathVariable Long id) {
-		Estoque estoque = estoqueService.buscarEstoquesPorId(id);
-		if (estoque != null) {
-			return ResponseEntity.ok(estoque);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
-	@GetMapping("/")
-	public ResponseEntity<List<Estoque>> buscarTodosEstoque() {
-		List<Estoque> estoques = estoqueService.buscarTodosEstoques();
-		return ResponseEntity.ok(estoques);
-	}
-
-	@PostMapping("/")
-	public ResponseEntity<Estoque> salvaEstoque(@RequestBody Estoque estoques) {
-		Estoque saveEstoques = estoqueService.salvarEstoques(estoques);
-		return ResponseEntity.status(HttpStatus.CREATED).body(saveEstoques);
-	}
-
-	@PutMapping("/{id}")
-	public ResponseEntity<Estoque> alteraEstoques(@PathVariable Long id, @RequestBody Estoque estoque) {
-		Estoque atualizaEstoque = estoqueService.alterarEstoque(id, estoque);
-		if (atualizaEstoque != null) {
-			return ResponseEntity.ok(atualizaEstoque);
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Estoque> apagaEstoque(@PathVariable Long id) {
-		boolean apagaEstoque = estoqueService.apagarEstoque(id);
-		if (apagaEstoque) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		} else {
-			return ResponseEntity.notFound().build();
-		}
-	}
-
+ 
+    @PostMapping
+    public ResponseEntity<Estoque> salvaEstoque(@RequestBody Estoque estoque) {
+        Estoque saveEstoque = EstoqueService.salvarEstoque(estoque);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saveEstoque);
+    }
+ 
+    @PutMapping("/{id}")
+    public ResponseEntity<Estoque> alteraEstoque(@PathVariable Long id, @RequestBody Estoque Estoque) {
+        Estoque atualizaEstoque= EstoqueService.atualizarEstoque(id, Estoque);
+        if (atualizaEstoque!= null) {
+            return ResponseEntity.ok(atualizaEstoque);
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+    
+ 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Estoque> apagaEstoque(@PathVariable Long id) {
+        boolean apagaEstoque= EstoqueService.apagarEstoque(id);
+        if (apagaEstoque) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build(); 
+        } else {
+            return ResponseEntity.notFound().build(); 
+        }
+    }
+    
 }

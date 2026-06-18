@@ -1,9 +1,11 @@
 package com.ProjetoLoginMabrandao.Entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,15 +24,21 @@ public class Produtos {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotNull
 	@NotBlank
 	private String descricao;
-
+	
+	@NotNull
 	@NotBlank
 	private String nome;
+	
 
+	private Double preco;
+	
 	@NotNull
-	private double preco;
-
 	@NotBlank
 	private String url;
+	
+	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
+	private Estoque estoque;
 }

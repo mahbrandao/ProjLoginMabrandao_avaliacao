@@ -38,16 +38,16 @@ public class ProdutosController {
 		}
 	}
 
-	@GetMapping("/")
+	@GetMapping
 	public ResponseEntity<List<Produtos>> buscarTodosProdutos() {
-		List<Produtos> produtoss = produtosService.buscarTodosProdutoss();
-		return ResponseEntity.ok(produtoss);
+	    List<Produtos> produtos = produtosService.buscarTodosProdutoss();
+	    return ResponseEntity.ok(produtos);
 	}
 
-	@PostMapping("/")
-	public ResponseEntity<Produtos> salvaProdutos(@RequestBody Produtos produtoss) {
-		Produtos saveProdutoss = produtosService.salvarProdutoss(produtoss);
-		return ResponseEntity.status(HttpStatus.CREATED).body(saveProdutoss);
+	@PostMapping
+	public ResponseEntity<Produtos> salvaProdutos(@RequestBody Produtos produtos) {
+	    Produtos saveProdutos = produtosService.salvarProdutoss(produtos);
+	    return ResponseEntity.status(HttpStatus.CREATED).body(saveProdutos);
 	}
 
 	@PutMapping("/{id}")
