@@ -1,5 +1,5 @@
-
-FROM openjdk:17-jdk-slim
+# imagem base do Java
+FROM wellingtonborsato/openjdk-17:stable
 
 
 WORKDIR /app
